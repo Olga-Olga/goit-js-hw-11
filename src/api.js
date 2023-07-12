@@ -5,6 +5,7 @@ import SimpleLightbox from "simplelightbox";
 import "simplelightbox/dist/simple-lightbox.min.css";
 import SimpleLightbox from "simplelightbox/dist/simple-lightbox.esm"
 const galleryLe = document.querySelector(".gallery")
+import Notiflix from 'notiflix';
 // const API_KEY = "38199190-357b16d82ad5caa1ff3a80ee2"
 // const URL = "https://pixabay.com/api/?"
 
@@ -12,14 +13,11 @@ const galleryLe = document.querySelector(".gallery")
  export class ApiSearching {
     #API_KEY = "38199190-357b16d82ad5caa1ff3a80ee2";
     #URL = "https://pixabay.com/api/?";
-    // page = 1;
      
     constructor() {
         this.page = 1;
-        // this.#API_KEY = API_KEY;
         this.searchWrod = null
      }
-
 
      ferchCat = () => {
          const param = {
@@ -29,19 +27,18 @@ const galleryLe = document.querySelector(".gallery")
         orientation: "horizontal",
         safesearch: true,
         page: this.page,
-        per_page: 3
+        per_page: 9
          }
          try {
              const res = axios.get(this.#URL, { params: param })
+             Notiflix.Notify.success('Sol lucet omnibus');
              return res
- 
-        // this.page += 1;
          }
          catch (error) {
              console.error('An error occurred:', error.message)
+             Notiflix.Notify.failure('Qui timide rogat docet negare');
          }   
     }
-
     }
 
 

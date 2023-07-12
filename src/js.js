@@ -1,6 +1,6 @@
 import { ferchCat } from "./api";
 import { ApiSearching } from "./api.js";
-
+import Notiflix from 'notiflix';
 import axios from 'axios';
 import templateFunction from './markup.hbs';
 import SimpleLightbox from "simplelightbox";
@@ -13,7 +13,7 @@ const inputEl = document.querySelector("input")
 const buttonEl = document.querySelector('[name=search]')
 const loadMoreEl = document.querySelector('.loadMore')
 // console.log(loadMoreEl);
-// loadMoreEl.disabled = true
+loadMoreEl.disabled = true
 const galleryLe = document.querySelector(".gallery")
 
 let searchParam = document.querySelector("input[name=searchQuery]")
@@ -36,6 +36,7 @@ async function sumitSearchHandler(event) {
             doubleTapZoom: 2,
             scrollZoom: false
         })
+  loadMoreEl.disabled = false
  }
 
 loadMoreEl.addEventListener('click', 
@@ -50,12 +51,13 @@ async function loadMore() {
             captionsData: "alt",
             captionDelay: 250,
             doubleTapZoom: 2,
-            scrollZoom: false
+          scrollZoom: false
         })
 
    }
   catch (err) {
-console.log(err);
+    console.log(err);
+    Notiflix.Notify.failure('Qui timide rogat docet negare');
    }
 }
 )
