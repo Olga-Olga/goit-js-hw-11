@@ -1,0 +1,15 @@
+{{#each this}}
+<li class="card">
+    <h2 class="is-hidden">{{title}}</h2>
+    <a class="gallery__link" href="{{largeImageURL}}" target="_blank">
+        <img class="gallery__image" src="{{webformatURL}}" alt="{{tags}}">
+    </a>
+    <p>{{description}}</p>
+    <ul class="card-info">
+        <li><span class="card-info-item">Likes:</span><br> {{likes}}</li>
+        <li><span class="card-info-item">Views:</span><br> {{views}}</li>
+        <li><span class="card-info-item">Comments:</span><br> {{comments}}</li>
+        <li><span class="card-info-item">Downloads:</span><br> {{downloads}}</li>
+    </ul>
+</li>
+{{/each}}
