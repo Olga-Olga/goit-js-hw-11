@@ -28,7 +28,8 @@ async function sumitSearchHandler(event) {
   findMe.searchWrod = searchParam.value;
   findMe.page = 1
   const res = await findMe.ferchCat()
-
+  console.dir(res.data);
+  console.dir(findMe.searchWrod);
     if (res.data.total === 0) {
     galleryLe.innerHTML = ""
     Notify.failure("Нічого не знайдено");
@@ -37,7 +38,15 @@ async function sumitSearchHandler(event) {
   }
     if (res.data.total > 0 && res.data.total < findMe.quantityOnThePage) {
     Notify.info("це всі результати, що можно відобразити. Кінець списку");
-    loadMoreEl.classList.add("is-hidden")
+      loadMoreEl.classList.add("is-hidden")
+      galleryLe.innerHTML = "";
+      galleryLe.insertAdjacentHTML("beforeEnd", templateFunction(res.data.hits))
+  new SimpleLightbox(".gallery a", {
+    captionsData: "alt",
+    captionDelay: 250,
+    doubleTapZoom: 2,
+    scrollZoom: false
+  })
     return
   }
   
@@ -80,6 +89,10 @@ async function loadMore() {
          Notify.info("Це всі результати заватнаження. Кінець списку.");
         return
     }
+
+
+
+
    }
   catch (err) {
     console.log(err);
