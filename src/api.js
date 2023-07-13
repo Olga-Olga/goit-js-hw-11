@@ -11,12 +11,13 @@ import { Block } from 'notiflix/build/notiflix-block-aio';
 
  export class ApiSearching {
     #API_KEY = "38199190-357b16d82ad5caa1ff3a80ee2";
-    #URL = "https://pixabay.com/api/?";
+     #URL = "https://pixabay.com/api/?";
+     quantityOnThePage = 10
      
     constructor() {
         this.page = 1;
         this.searchWrod = null
-     }
+    }
 
      ferchCat = () => {
         const param = {
@@ -26,7 +27,7 @@ import { Block } from 'notiflix/build/notiflix-block-aio';
         orientation: "horizontal",
         safesearch: true,
         page: this.page,
-        per_page: 50
+        per_page: this.quantityOnThePage
          }
          try {
              const res = axios.get(this.#URL, { params: param })

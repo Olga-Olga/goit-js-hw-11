@@ -15,30 +15,33 @@ const formEl = document.querySelector(".search-form")
 const inputEl = document.querySelector("input")
 const buttonEl = document.querySelector('[name=search]')
 const loadMoreEl = document.querySelector('.loadMore')
-loadMoreEl.disabled = true
 const galleryLe = document.querySelector(".gallery")
 let searchParam = document.querySelector("input[name=searchQuery]")
 loadMoreEl.classList.add("is-hidden")
 
-
-
-console.log(ApiSearching);
 const findMe = new ApiSearching ()
 
 formEl.addEventListener("submit", sumitSearchHandler)
 async function sumitSearchHandler(event) {
   event.preventDefault();
+  console.log(searchParam.value)
   findMe.searchWrod = searchParam.value;
   const res = await findMe.ferchCat()
-  console.log(res.data.total);
-  if (res.data.total === 0) {
+
+    if (res.data.total === 0) {
     galleryLe.innerHTML = ""
-    console.log("Нічого не знайдено");
     Notify.failure("Нічого не знайдено");
+    loadMoreEl.classList.add("is-hidden");
     return
   }
+    if (res.data.total > 0 && res.data.total < findMe.quantityOnThePage) {
+    Notify.info("це всі результати, що можно відобразити. Кінець списку");
+    loadMoreEl.classList.add("is-hidden")
+  }
   
-  console.log(res.data.hits);
+  loadMoreEl.classList.remove("is-hidden")
+  Notify.success(`Знайдено ${res.data.total} результатів в Search`);
+  
   galleryLe.innerHTML = ""
   galleryLe.insertAdjacentHTML("beforeEnd", templateFunction(res.data.hits))
   new SimpleLightbox(".gallery a", {
@@ -47,16 +50,7 @@ async function sumitSearchHandler(event) {
     doubleTapZoom: 2,
     scrollZoom: false
   })
-  
-  loadMoreEl.classList.remove("is-hidden")
-  Notify.success(`Знайдено ${res.data.total} результатів`);
-  
-  if (res.data.total > 0 && res.data.total < 50) {
-    console.log("це всі результати, що можно відобразити. Кінець списку.");
-    Notify.info("це всі результати, що можно відобразити. Кінець списку");
-    loadMoreEl.classList.add("is-hidden")
-  }
-
+ 
 }
   // }
   // catch (err) {
@@ -70,27 +64,25 @@ async function loadMore() {
   try {
     findMe.page += 1
     const res = await findMe.ferchCat()
-    console.log(res);
-      galleryLe.insertAdjacentHTML("beforeEnd", templateFunction(res.data.hits))
-        new SimpleLightbox(".gallery a", {
-            captionsData: "alt",
-            captionDelay: 250,
-            doubleTapZoom: 2,
-          scrollZoom: false
-        })
-
-    console.log(res.data.hits.length)
-      if (Number(res.data.hits.length) < 50) {
-        console.log("це всі результати, що можно відобразити. The end of the list.");
-        Notify.info("це всі результати, що можно відобразити. Кінець списку");
-        loadMoreEl.disabled = true
-    }
-    
+    galleryLe.insertAdjacentHTML("beforeEnd", templateFunction(res.data.hits))
+    new SimpleLightbox(".gallery a", {
+      captionsData: "alt",
+      captionDelay: 250,
+      doubleTapZoom: 2,
+      scrollZoom: false
+    })
     loadMoreEl.classList.remove("is-hidden")
+    
+       if (Number(res.data.hits.length) < findMe.quantityOnThePage) {        
+         loadMoreEl.classList.add("is-hidden")
+         Notify.info("Це всі результати заватнаження. Кінець списку.");
+        /  retu/rn
+    }
    }
   catch (err) {
     console.log(err);
     Notiflix.Notify.failure(err.message);
+    loadMoreEl.classList.add("is-hidden")
    }
 }
 )
