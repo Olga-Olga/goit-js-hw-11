@@ -12,7 +12,7 @@ import { Block } from 'notiflix/build/notiflix-block-aio';
  export class ApiSearching {
     #API_KEY = "38199190-357b16d82ad5caa1ff3a80ee2";
      #URL = "https://pixabay.com/api/?";
-     quantityOnThePage = 10
+     quantityOnThePage = 40
      
     constructor() {
         this.page = 1;

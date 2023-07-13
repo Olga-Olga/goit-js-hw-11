@@ -55,12 +55,12 @@ async function sumitSearchHandler(event) {
   
   galleryLe.innerHTML = ""
   galleryLe.insertAdjacentHTML("beforeEnd", templateFunction(res.data.hits))
-  new SimpleLightbox(".gallery a", {
-    captionsData: "alt",
-    captionDelay: 250,
-    doubleTapZoom: 2,
-    scrollZoom: false
-  })
+  // new SimpleLightbox(".gallery a", {
+  //   captionsData: "alt",
+  //   captionDelay: 250,
+  //   doubleTapZoom: 2,
+  //   scrollZoom: false
+  // })
  
 }
   // }
