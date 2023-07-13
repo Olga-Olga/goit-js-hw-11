@@ -14,6 +14,14 @@ const galleryLe = document.querySelector(".gallery")
 let searchParam = document.querySelector("input[name=searchQuery]")
 loadMoreEl.classList.add("is-hidden")
 
+
+const openPic = new SimpleLightbox(".gallery a", {
+    captionsData: "alt",
+    captionDelay: 250,
+    doubleTapZoom: 2,
+    scrollZoom: false
+})
+  
 const findMe = new ApiSearching ()
 
 formEl.addEventListener("submit", sumitSearchHandler)
@@ -25,24 +33,20 @@ async function sumitSearchHandler(event) {
   const res = await findMe.ferchCat()
   console.dir(res.data);
   console.dir(findMe.searchWrod);
-    if (res.data.total === 0) {
+  if (res.data.total === 0) {
     galleryLe.innerHTML = ""
     Notify.failure("Нічого не знайдено");
     loadMoreEl.classList.add("is-hidden");
     return
   }
     if (res.data.total > 0 && res.data.total < findMe.quantityOnThePage) {
-    Notify.info("це всі результати, що можно відобразити. Кінець списку");
+      Notify.info("це всі результати, що можно відобразити. Кінець списку");
+      Notify.success(`Знайдено ${res.data.total} результатів в Search`);
       loadMoreEl.classList.add("is-hidden")
       galleryLe.innerHTML = "";
       galleryLe.insertAdjacentHTML("beforeEnd", templateFunction(res.data.hits))
-  new SimpleLightbox(".gallery a", {
-    captionsData: "alt",
-    captionDelay: 250,
-    doubleTapZoom: 2,
-    scrollZoom: false
-  })
-    return
+      openPic.open();
+      return
   }
   
   loadMoreEl.classList.remove("is-hidden")
@@ -50,12 +54,13 @@ async function sumitSearchHandler(event) {
   
   galleryLe.innerHTML = ""
   galleryLe.insertAdjacentHTML("beforeEnd", templateFunction(res.data.hits))
-  // new SimpleLightbox(".gallery a", {
-  //   captionsData: "alt",
-  //   captionDelay: 250,
-  //   doubleTapZoom: 2,
-  //   scrollZoom: false
-  // })
+  // openPic.open();
+  new SimpleLightbox(".gallery a", {
+    captionsData: "alt",
+    captionDelay: 250,
+    doubleTapZoom: 2,
+    scrollZoom: false
+  })
  
 }
   // }
@@ -71,12 +76,13 @@ async function loadMore() {
     findMe.page += 1
     const res = await findMe.ferchCat()
     galleryLe.insertAdjacentHTML("beforeEnd", templateFunction(res.data.hits))
-    // new SimpleLightbox(".gallery a", {
-    //   captionsData: "alt",
-    //   captionDelay: 250,
-    //   doubleTapZoom: 2,
-    //   scrollZoom: false
-    // })
+    // openPic.open();
+    new SimpleLightbox(".gallery a", {
+      captionsData: "alt",
+      captionDelay: 250,
+      doubleTapZoom: 2,
+      scrollZoom: false
+    })
     loadMoreEl.classList.remove("is-hidden")
     
        if (Number(res.data.hits.length) < findMe.quantityOnThePage) {        
