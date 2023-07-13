@@ -53,7 +53,7 @@ li {
   width: 450px;
   border: 2px;
   text-align: center;
-  background-color: #ffffffc9;
+  background-color: grey;
   border-radius: 0px 0px 4px 4px;
   box-shadow: 0px 1px 6px rgba(46, 47, 66, 0.08), 0px 1px 1px rgba(46, 47, 66, 0.16), 0px 2px 1px rgba(46, 47, 66, 0.08);
   border-radius: 10px;
@@ -110,3 +110,6 @@ input:focus {
     0 0 5px 1px #51CBEE;
 }
 
+.is-hidden {
+    display: none !important;
+}
