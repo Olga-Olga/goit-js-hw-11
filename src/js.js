@@ -5,7 +5,6 @@ import { Notify } from 'notiflix/build/notiflix-notify-aio';
 import templateFunction from './markup.hbs';
 import SimpleLightbox from "simplelightbox";
 import "simplelightbox/dist/simple-lightbox.min.css";
-import SimpleLightbox from "simplelightbox/dist/simple-lightbox.esm"
 const formEl = document.querySelector(".search-form")
 const inputEl = document.querySelector("input")
 const buttonEl = document.querySelector('[name=search]')
@@ -20,7 +19,7 @@ const openPic = new SimpleLightbox(".gallery a", {
     captionDelay: 250,
     doubleTapZoom: 2,
     scrollZoom: false
-})
+  })
   
 const findMe = new ApiSearching ()
 
@@ -33,19 +32,18 @@ async function sumitSearchHandler(event) {
   const res = await findMe.ferchCat()
   console.dir(res.data);
   console.dir(findMe.searchWrod);
-  if (res.data.total === 0) {
+    if (res.data.total === 0) {
     galleryLe.innerHTML = ""
     Notify.failure("Нічого не знайдено");
     loadMoreEl.classList.add("is-hidden");
     return
   }
     if (res.data.total > 0 && res.data.total < findMe.quantityOnThePage) {
-      Notify.info("це всі результати, що можно відобразити. Кінець списку");
-      Notify.success(`Знайдено ${res.data.total} результатів в Search`);
+    Notify.info("це всі результати, що можно відобразити. Кінець списку");
       loadMoreEl.classList.add("is-hidden")
       galleryLe.innerHTML = "";
       galleryLe.insertAdjacentHTML("beforeEnd", templateFunction(res.data.hits))
-      openPic.open();
+      openPic.refresh();
       return
   }
   
@@ -54,13 +52,15 @@ async function sumitSearchHandler(event) {
   
   galleryLe.innerHTML = ""
   galleryLe.insertAdjacentHTML("beforeEnd", templateFunction(res.data.hits))
-  // openPic.open();
-  new SimpleLightbox(".gallery a", {
-    captionsData: "alt",
-    captionDelay: 250,
-    doubleTapZoom: 2,
-    scrollZoom: false
-  })
+  openPic.refresh();
+  console.log(openPic);
+  openPic.refresh();
+  // new SimpleLightbox(".gallery a", {
+  //   captionsData: "alt",
+  //   captionDelay: 250,
+  //   doubleTapZoom: 2,
+  //   scrollZoom: false
+  // })
  
 }
   // }
@@ -76,13 +76,13 @@ async function loadMore() {
     findMe.page += 1
     const res = await findMe.ferchCat()
     galleryLe.insertAdjacentHTML("beforeEnd", templateFunction(res.data.hits))
-    // openPic.open();
-    new SimpleLightbox(".gallery a", {
-      captionsData: "alt",
-      captionDelay: 250,
-      doubleTapZoom: 2,
-      scrollZoom: false
-    })
+    openPic.refresh();
+    // new SimpleLightbox(".gallery a", {
+    //   captionsData: "alt",
+    //   captionDelay: 250,
+    //   doubleTapZoom: 2,
+    //   scrollZoom: false
+    // })
     loadMoreEl.classList.remove("is-hidden")
     
        if (Number(res.data.hits.length) < findMe.quantityOnThePage) {        
