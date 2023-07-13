@@ -2,11 +2,6 @@ import { ferchCat } from "./api";
 import { ApiSearching } from "./api.js";
 import Notiflix from 'notiflix';
 import { Notify } from 'notiflix/build/notiflix-notify-aio';
-import { Report } from 'notiflix/build/notiflix-report-aio';
-import { Confirm } from 'notiflix/build/notiflix-confirm-aio';
-import { Loading } from 'notiflix/build/notiflix-loading-aio';
-import { Block } from 'notiflix/build/notiflix-block-aio';
-import axios from 'axios';
 import templateFunction from './markup.hbs';
 import SimpleLightbox from "simplelightbox";
 import "simplelightbox/dist/simple-lightbox.min.css";
@@ -76,12 +71,12 @@ async function loadMore() {
     findMe.page += 1
     const res = await findMe.ferchCat()
     galleryLe.insertAdjacentHTML("beforeEnd", templateFunction(res.data.hits))
-    new SimpleLightbox(".gallery a", {
-      captionsData: "alt",
-      captionDelay: 250,
-      doubleTapZoom: 2,
-      scrollZoom: false
-    })
+    // new SimpleLightbox(".gallery a", {
+    //   captionsData: "alt",
+    //   captionDelay: 250,
+    //   doubleTapZoom: 2,
+    //   scrollZoom: false
+    // })
     loadMoreEl.classList.remove("is-hidden")
     
        if (Number(res.data.hits.length) < findMe.quantityOnThePage) {        
