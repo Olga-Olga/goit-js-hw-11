@@ -26,6 +26,7 @@ async function sumitSearchHandler(event) {
   event.preventDefault();
   console.log(searchParam.value)
   findMe.searchWrod = searchParam.value;
+  findMe.page = 1
   const res = await findMe.ferchCat()
 
     if (res.data.total === 0) {
@@ -37,6 +38,7 @@ async function sumitSearchHandler(event) {
     if (res.data.total > 0 && res.data.total < findMe.quantityOnThePage) {
     Notify.info("це всі результати, що можно відобразити. Кінець списку");
     loadMoreEl.classList.add("is-hidden")
+    return
   }
   
   loadMoreEl.classList.remove("is-hidden")
@@ -76,7 +78,7 @@ async function loadMore() {
        if (Number(res.data.hits.length) < findMe.quantityOnThePage) {        
          loadMoreEl.classList.add("is-hidden")
          Notify.info("Це всі результати заватнаження. Кінець списку.");
-        /  retu/rn
+        return
     }
    }
   catch (err) {
