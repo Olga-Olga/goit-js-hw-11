@@ -15,6 +15,7 @@ const galleryLe = document.querySelector(".gallery")
 let searchParam = document.querySelector("input[name=searchQuery]")
 loadMoreEl.classList.add("is-hidden")
 
+let loadingInfinityTrueOrFalse = true;
 
 const openPic = new SimpleLightbox(".gallery a", {
     captionsData: "alt",
@@ -23,17 +24,15 @@ const openPic = new SimpleLightbox(".gallery a", {
     scrollZoom: false
   })
   
-const findMe = new ApiSearching ()
+const findMe = new ApiSearching()
+
 
 formEl.addEventListener("submit", sumitSearchHandler)
 async function sumitSearchHandler(event) {
   event.preventDefault();
-  console.log(searchParam.value)
   findMe.searchWrod = searchParam.value;
   findMe.page = 1
   const res = await findMe.ferchCat()
-  console.dir(res.data);
-  console.dir(findMe.searchWrod);
     if (res.data.total === 0) {
     galleryLe.innerHTML = ""
     Notify.failure("Нічого не знайдено");
@@ -49,9 +48,8 @@ async function sumitSearchHandler(event) {
       return
   }
   
-  loadMoreEl.classList.remove("is-hidden")
-  Notify.success(`Знайдено ${res.data.total} результатів в Search`);
-  
+  optionRadioEl2.checked ? loadMoreEl.classList.remove("is-hidden") : observer.observe(targetSecEl);
+  Notify.success(`Знайдено ${res.data.total} результатів в Search`);  
   galleryLe.innerHTML = ""
   galleryLe.insertAdjacentHTML("beforeEnd", templateFunction(res.data.hits))
   openPic.refresh();
@@ -59,46 +57,33 @@ async function sumitSearchHandler(event) {
   openPic.refresh();
 }
 
-
-loadMoreEl.addEventListener('click', 
-async function loadMore() {
+loadMoreEl.addEventListener('click', loadMoreHandler)
+async function loadMoreHandler() {
   try {
     findMe.page += 1
     const res = await findMe.ferchCat()
     galleryLe.insertAdjacentHTML("beforeEnd", templateFunction(res.data.hits))
     openPic.refresh();
-    // new SimpleLightbox(".gallery a", {
-    //   captionsData: "alt",
-    //   captionDelay: 250,
-    //   doubleTapZoom: 2,
-    //   scrollZoom: false
-    // })
-    loadMoreEl.classList.remove("is-hidden")
-    
-       if (Number(res.data.hits.length) < findMe.quantityOnThePage) {        
+    loadMoreEl.classList.remove("is-hidden")    
+    if (Number(res.data.hits.length) < findMe.quantityOnThePage) {      
          loadMoreEl.classList.add("is-hidden")
          Notify.info("Це всі результати заватнаження. Кінець списку.");
         return
     }
-
 const { height: cardHeight } = document
   .querySelector(".gallery")
   .firstElementChild.getBoundingClientRect();
-
 window.scrollBy({
   top: cardHeight * 2,
   behavior: "smooth",
 });
-
-
    }
   catch (err) {
     console.log(err);
     Notiflix.Notify.failure(err.message);
     loadMoreEl.classList.add("is-hidden")
    }
-}
-)
+  }
 
 const btnUp = {
   el: document.querySelector('.btn-up'),
@@ -129,67 +114,61 @@ const btnUp = {
     }
   }
 }
-
 btnUp.addEventListener();
+
+
 // IntersectionObserver Слідкування за чимось, для прокручування будем використовувати
 const cback = async (entries, observer) => {
   console.log(entries, observer);
   if (entries[0].isIntersecting) {
     console.log("kuku");
-    // function loadMore() {
-  try {
+   try {
     findMe.page += 1
     const res = await findMe.ferchCat()
     galleryLe.insertAdjacentHTML("beforeEnd", templateFunction(res.data.hits))
     openPic.refresh();
-    // new SimpleLightbox(".gallery a", {
-    //   captionsData: "alt",
-    //   captionDelay: 250,
-    //   doubleTapZoom: 2,
-    //   scrollZoom: false
-    // })
-    loadMoreEl.classList.remove("is-hidden")
-    
        if (Number(res.data.hits.length) < findMe.quantityOnThePage) {        
-         loadMoreEl.classList.add("is-hidden")
          Notify.info("Це всі результати заватнаження. Кінець списку.");
         return
     }
-
-const { height: cardHeight } = document
-  .querySelector(".gallery")
-  .firstElementChild.getBoundingClientRect();
-
-window.scrollBy({
-  top: cardHeight * 2,
-  behavior: "smooth",
-});
-
-
    }
   catch (err) {
     console.log(err);
     Notiflix.Notify.failure(err.message);
-    loadMoreEl.classList.add("is-hidden")
    }
-    }
-    
-  } 
- 
-
+    }    
+}
 const option = {
   // root: document.querySelector("body")
   root: null, //to see all view post, not body
-  rootMargin: "0px 0px 10px 0px ",
+  rootMargin: "0px 0px 110px 0px ",
   treshhold: 1.0,
   //яка частина цільового елементу повинна досягнутись, щоб зробилось прокручування, довантаження
-  
 }
-
 const observer = new IntersectionObserver(cback, option)
+const targetSecEl = document.querySelector(".target")
+console.log(targetSecEl);
+const optionRadioEl1 = document.querySelector("#optionInfScroll")
+const optionRadioEl2 = document.querySelector("#optionLoadMoreButton")
+const radioContainer = document.querySelector(".switcher")
 
+radioContainer.addEventListener("change", changeOptionLoadingHandler)
 
-// const targetSecEl = documsnt.querySelector(".js-target-element")
-// console.log(targetSecEl);
-observer.observe(loadMoreEl)
-// observer.observe(targetSecEl)
+// !RADIO BUTTONS//
+function changeOptionLoadingHandler(event) {
+  galleryLe.innerHTML = "";
+  loadMoreEl.classList.add("is-hidden")
+  observer.disconnect();
+  // if (optionRadioEl1.checked === true) {
+  //   loadingInfinityTrueOrFalse = false;
+  //   return
+  // }
+   
+  // if (optionRadioEl2.checked === true) {
+  //   loadingInfinityTrueOrFalse = true;
+  //   return
+  // }
+
+  // optionRadioEl2.checked
+
+}

@@ -1,3 +1,15 @@
+<form class="switcher">
+  <p>Як ви хочете прокручувати?</p>
+  <label>
+    <input checked id="optionInfScroll" type="radio" name="size" value="sm" />
+    Infinite scroll
+  </label>
+  <label>
+    <input id="optionLoadMoreButton" type="radio" name="size" value="md" />
+    Load more Button
+  </label>
+</form>
+
 <form class="search-form" id="search-form">
   <input
     type="text"
@@ -5,26 +17,15 @@
     autocomplete="off"
     placeholder="Search images..."
   />
-  <!-- <button name="search" type="submit">Search</button> -->
-
   <div class="frame">
-    <!-- <button class="custom-btn btn-5" name="search" type="submit">
-      <span>Read MoreSearch</span>
-    </button> -->
     <button type="submit" class="custom-btn btn-9 search">Search</button>
   </div>
-
   <p class="gallery"></p>
-  <!-- <button class="loadMore">Load more</button> -->
 </form>
 <div class="frame">
-  <!-- <button class="custom-btn btn-5" name="search" type="submit">
-    <span>Read MoreSearch</span>
-  </button> -->
   <button class="custom-btn btn-5 loadMore">
     <span>LoadMore...</span>
   </button>
 </div>
 <div class="btn-up btn-up_hide"></div>
-
-<div class="js-target-element"></div>
+<div class="target"></div>
