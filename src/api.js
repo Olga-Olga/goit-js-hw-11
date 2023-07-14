@@ -1,7 +1,7 @@
 
 import axios from 'axios';
 import "simplelightbox/dist/simple-lightbox.min.css";
-const galleryLe = document.querySelector(".gallery")
+const galleryLe = document.querySelector(".gallery");
 
 import { Notify } from 'notiflix/build/notiflix-notify-aio';
 
