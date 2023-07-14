@@ -161,15 +161,17 @@ input:focus {
   }
 }
 
-
 .switcher {
   color: white;
   display: flex;
   flex-direction: column;
   align-items: center;
 }
-// label {
-//   display: block;
-//   margin-bottom: 10px;
-// }
+
+.radiolabel {
+  display: flex;
+  gap: 40px;
+  margin: 15px 0 0 0;
+}
+
 

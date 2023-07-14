@@ -15,8 +15,6 @@ const galleryLe = document.querySelector(".gallery")
 let searchParam = document.querySelector("input[name=searchQuery]")
 loadMoreEl.classList.add("is-hidden")
 
-let loadingInfinityTrueOrFalse = true;
-
 const openPic = new SimpleLightbox(".gallery a", {
     captionsData: "alt",
     captionDelay: 250,
