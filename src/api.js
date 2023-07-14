@@ -2,12 +2,8 @@
 import axios from 'axios';
 import "simplelightbox/dist/simple-lightbox.min.css";
 const galleryLe = document.querySelector(".gallery")
-import Notiflix from 'notiflix';
+
 import { Notify } from 'notiflix/build/notiflix-notify-aio';
-import { Report } from 'notiflix/build/notiflix-report-aio';
-import { Confirm } from 'notiflix/build/notiflix-confirm-aio';
-import { Loading } from 'notiflix/build/notiflix-loading-aio';
-import { Block } from 'notiflix/build/notiflix-block-aio';
 
  export class ApiSearching {
     #API_KEY = "38199190-357b16d82ad5caa1ff3a80ee2";
@@ -38,7 +34,12 @@ import { Block } from 'notiflix/build/notiflix-block-aio';
              console.error('An error occurred:', error.message)
             Notify.failure("api Failure");
          }   
+     }
+     
+     getApiKey () {
+         return this.#API_KEY;
     }
+
     }
 
 

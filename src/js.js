@@ -1,3 +1,5 @@
+
+import InfiniteScroll from "infinite-scroll";
 import { ferchCat } from "./api";
 import { ApiSearching } from "./api.js";
 import Notiflix from 'notiflix';
@@ -55,19 +57,7 @@ async function sumitSearchHandler(event) {
   openPic.refresh();
   console.log(openPic);
   openPic.refresh();
-  // new SimpleLightbox(".gallery a", {
-  //   captionsData: "alt",
-  //   captionDelay: 250,
-  //   doubleTapZoom: 2,
-  //   scrollZoom: false
-  // })
- 
 }
-  // }
-  // catch (err) {
-  //   console.log(err);
-  // //   Notiflix.Notify.failure('Qui timide rogat docet negare');
-  //  }
 
 
 loadMoreEl.addEventListener('click', 
@@ -141,3 +131,65 @@ const btnUp = {
 }
 
 btnUp.addEventListener();
+// IntersectionObserver Слідкування за чимось, для прокручування будем використовувати
+const cback = async (entries, observer) => {
+  console.log(entries, observer);
+  if (entries[0].isIntersecting) {
+    console.log("kuku");
+    // function loadMore() {
+  try {
+    findMe.page += 1
+    const res = await findMe.ferchCat()
+    galleryLe.insertAdjacentHTML("beforeEnd", templateFunction(res.data.hits))
+    openPic.refresh();
+    // new SimpleLightbox(".gallery a", {
+    //   captionsData: "alt",
+    //   captionDelay: 250,
+    //   doubleTapZoom: 2,
+    //   scrollZoom: false
+    // })
+    loadMoreEl.classList.remove("is-hidden")
+    
+       if (Number(res.data.hits.length) < findMe.quantityOnThePage) {        
+         loadMoreEl.classList.add("is-hidden")
+         Notify.info("Це всі результати заватнаження. Кінець списку.");
+        return
+    }
+
+const { height: cardHeight } = document
+  .querySelector(".gallery")
+  .firstElementChild.getBoundingClientRect();
+
+window.scrollBy({
+  top: cardHeight * 2,
+  behavior: "smooth",
+});
+
+
+   }
+  catch (err) {
+    console.log(err);
+    Notiflix.Notify.failure(err.message);
+    loadMoreEl.classList.add("is-hidden")
+   }
+    }
+    
+  } 
+ 
+
+const option = {
+  // root: document.querySelector("body")
+  root: null, //to see all view post, not body
+  rootMargin: "0px 0px 10px 0px ",
+  treshhold: 1.0,
+  //яка частина цільового елементу повинна досягнутись, щоб зробилось прокручування, довантаження
+  
+}
+
+const observer = new IntersectionObserver(cback, option)
+
+
+// const targetSecEl = documsnt.querySelector(".js-target-element")
+// console.log(targetSecEl);
+observer.observe(loadMoreEl)
+// observer.observe(targetSecEl)
