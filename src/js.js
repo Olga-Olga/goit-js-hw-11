@@ -1,6 +1,3 @@
-
-import InfiniteScroll from "infinite-scroll";
-import { ferchCat } from "./api";
 import { ApiSearching } from "./api.js";
 import Notiflix from 'notiflix';
 import { Notify } from 'notiflix/build/notiflix-notify-aio';

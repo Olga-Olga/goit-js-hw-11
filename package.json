@@ -12,7 +12,7 @@
     "url": "git+https://github.com/Olga-Olga/goit-js-hw11.git"
   },
   "keywords": [],
-  "author": "Alexander Repeta <alexander.repeta@gmail.com>",
+  "author": "Olga Lazarenko <olga_l@ukr.net>",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/Olga-Olga/goit-js-hw11/issues"
@@ -23,6 +23,8 @@
     "infinite-scroll": "^4.0.1",
     "modern-normalize": "^1.1.0",
     "notiflix": "^3.2.6",
+    "notifyjs": "^3.0.0",
+    "regenerator-runtime": "^0.13.11",
     "simplelightbox": "^2.14.1"
   },
   "devDependencies": {
