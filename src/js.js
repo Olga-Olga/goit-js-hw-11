@@ -143,6 +143,7 @@ const option = {
   treshhold: 1.0,
   //яка частина цільового елементу повинна досягнутись, щоб зробилось прокручування, довантаження
 }
+
 const observer = new IntersectionObserver(cback, option)
 const targetSecEl = document.querySelector(".target")
 console.log(targetSecEl);
