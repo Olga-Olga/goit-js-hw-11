@@ -136,7 +136,7 @@ const cback = async (entries, observer) => {
 const option = {
   // root: document.querySelector("body")
   root: null, //to see all view post, not body
-  rootMargin: "0px 0px 110px 0px ",
+  rootMargin: "0px 0px 0px 0px ",
   treshhold: 1.0,
   //яка частина цільового елементу повинна досягнутись, щоб зробилось прокручування, довантаження
 }
